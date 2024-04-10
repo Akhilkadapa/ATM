@@ -1,6 +1,7 @@
 
 // UserInput.java
 
+
 public class UserInput {
     public String getInput(String prompt) {
         System.out.print(prompt);
