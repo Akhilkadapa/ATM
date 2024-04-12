@@ -1,11 +1,13 @@
+package atm.core;
 
-// ATMOperations.java
-import account.Account;
-import authenticator.AuthenticationManager;
+import atm.account.Account;
+import atm.exception.InsufficientFundsException;
+import authenticator.AuthenticatorManager;
+
 
 public class ATMOperations {
-    private Account account;
-    private AuthenticatorManager authenticator;
+    private final Account account;
+    private final AuthenticatorManager authenticator;
 
     public ATMOperations(Account account, AuthenticatorManager authenticator) {
         this.account = account;
@@ -29,6 +31,10 @@ public class ATMOperations {
     }
 
     public void changePin(String newPin) {
-        authenticator.changePin(newPin);
+        try {
+            authenticator.changePin(newPin);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 }

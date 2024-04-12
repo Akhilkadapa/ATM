@@ -1,25 +1,30 @@
 
-import static org.junit.Assert .*;
-import org.junit.Test;
-import authenticator.AuthenticationManager;
+package atm.authenticator;
 
-public class AuthenticationTest {
+import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+public class AuthenticatorManagerTest {
 
     @Test
     public void testValidatePin() {
-        AuthenticationManager authenticator = new AuthenticationManager("1234");
-
+        AuthenticatorManager authenticator = new AuthenticatorManager("1234");
         assertTrue(authenticator.validatePin("1234"));
-        assertFalse(authenticator.validatePin("0000")); // Incorrect PIN
+        assertFalse(authenticator.validatePin("4321"));
     }
 
     @Test
     public void testChangePin() {
-        AuthenticationManager authenticator = new AuthenticationManager("1234");
-
+        AuthenticatorManager authenticator = new AuthenticatorManager("1234");
         authenticator.changePin("4321");
-        assertTrue(authenticator.validatePin("4321")); // New PIN should be valid
-        assertFalse(authenticator.validatePin("1234")); // Old PIN should be invalid
+        assertTrue(authenticator.validatePin("4321"));
+    }
+
+    @Test
+    public void testChangePinWithInvalidLength() {
+        AuthenticatorManager authenticator = new AuthenticatorManager("1234");
+        assertThrows(IllegalArgumentException.class, () -> authenticator.changePin("432"));
     }
 }

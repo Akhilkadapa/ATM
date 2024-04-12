@@ -3,7 +3,8 @@
 // AccountTest.java
 import static org.junit.Assert.assertEquals;
 
-import account.Account;
+import atm.account.Account;
+import atm.exception.InsufficientFundsException;
 import org.junit.Test;
 
 public class AccountTest {
