@@ -1,8 +1,9 @@
-package atm.core;
+package core;
 
-import atm.account.Account;
-import atm.exception.InsufficientFundsException;
+import account.Account;
+import exception.InsufficientFundsException;
 import authenticator.AuthenticatorManager;
+
 
 
 public class ATMOperations {

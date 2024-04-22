@@ -1,7 +1,9 @@
 package atm.UI;
 
-import atm.core.ATMOperations;
-import atm.exception.InsufficientFundsException;
+import UI.UserInput;
+import core.ATMOperations;
+import exception.InsufficientFundsException;
+
 
 public class ATMInterface {
     private final ATMOperations atmOperations;
@@ -42,7 +44,7 @@ public class ATMInterface {
                     try {
                         double amount = userInput.getAmount();
                         atmOperations.withdrawMoney(amount);
-                    } catch (IllegalArgumentException | InsufficientFundsException e) {
+                    } catch (IllegalArgumentException e) {
                         System.out.println("Error: " + e.getMessage());
                     }
                     break;

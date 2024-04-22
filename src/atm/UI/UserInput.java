@@ -1,4 +1,4 @@
-package atm.UI;
+package UI;
 
 import java.util.Scanner;
 

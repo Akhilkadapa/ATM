@@ -1,22 +1,24 @@
-package atm.account;
-
+package account;
+import exception.InsufficientFundsException;
 public class Account {
     private double balance;
 
     public Account(double initialBalance) {
+
         this.balance = initialBalance;
     }
 
     public double getBalance() {
+
         return balance;
     }
 
-    public void withdraw(double amount) {
+    public void withdraw(double amount) throws InsufficientFundsException {
         if (amount <= 0) {
             throw new IllegalArgumentException("Invalid amount");
         }
         if (amount > balance) {
-            throw new IllegalArgumentException("Insufficient funds");
+            throw new InsufficientFundsException("Insufficient funds");
         }
         balance -= amount;
         System.out.println("Withdrawal successful. Remaining balance: $" + balance);
