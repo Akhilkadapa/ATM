@@ -28,9 +28,9 @@ public class AccountTest {
 
     @Test(expected = InsufficientFundsException.class)
     public void testWithdrawInsufficientFunds() {
-        Account account = new Account(100);
+        Account account = new Account(1000);
         try {
-            account.withdraw(500);
+            account.withdraw(5000);
         } catch (InsufficientFundsException e) {
             // Insufficient funds exception occurred, test passed
             return;

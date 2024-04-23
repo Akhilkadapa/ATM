@@ -20,7 +20,7 @@ public class ATMOperations {
     }
 
     public void displayBalance() {
-        System.out.println("Current Balance: $" + account.getBalance());
+        System.out.println("Current Balance: £" + account.getBalance());
     }
 
     public void withdrawMoney(double amount) {
