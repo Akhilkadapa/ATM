@@ -17,7 +17,7 @@ public class AccountTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testWithdrawNegativeAmount() throws InsufficientFundsException {
+    public void testWithdrawNegativeAmount() {
         Account account = new Account(1000);
         try {
             account.withdraw(-500);
