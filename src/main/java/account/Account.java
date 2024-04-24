@@ -1,5 +1,5 @@
-package account;
-import exception.InsufficientFundsException;
+package java.account;
+import java.exception.InsufficientFundsException;
 public class Account {
     private double balance;
 

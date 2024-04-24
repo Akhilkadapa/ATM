@@ -4,8 +4,8 @@
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-import account.Account;
-import exception.InsufficientFundsException;
+import java.account.Account;
+import java.exception.InsufficientFundsException;
 import org.junit.Test;
 
 public class AccountTest {

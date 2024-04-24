@@ -1,8 +1,6 @@
-package atm.UI;
+package java.UI;
 
-import UI.UserInput;
-import core.ATMOperations;
-import exception.InsufficientFundsException;
+import java.core.ATMOperations;
 
 
 public class ATMInterface {

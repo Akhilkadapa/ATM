@@ -1,9 +1,8 @@
-package core;
+package java.core;
 
-import account.Account;
-import exception.InsufficientFundsException;
-import authenticator.AuthenticatorManager;
-
+import java.account.Account;
+import java.exception.InsufficientFundsException;
+import java.authenticator.AuthenticatorManager;
 
 
 public class ATMOperations {
