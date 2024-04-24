@@ -1,12 +1,12 @@
 
 
 // AccountTest.java
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
-import java.account.Account;
-import java.exception.InsufficientFundsException;
+import account.Account;
+import exception.InsufficientFundsException;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class AccountTest {
     @Test
@@ -27,15 +27,12 @@ public class AccountTest {
     }
 
     @Test(expected = InsufficientFundsException.class)
-    public void testWithdrawInsufficientFunds() {
+    public void testWithdrawInsufficientFunds() throws InsufficientFundsException {
         Account account = new Account(1000);
-        try {
+
             account.withdraw(5000);
-        } catch (InsufficientFundsException e) {
-            // Insufficient funds exception occurred, test passed
-            return;
+
         }
-        // If no exception occurred, the test failed
-        fail("Expected InsufficientFundsException was not thrown");
+
     }
-}
+

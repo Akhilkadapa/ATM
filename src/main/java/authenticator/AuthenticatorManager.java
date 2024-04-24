@@ -1,4 +1,4 @@
-package java.authenticator;
+package authenticator;
 
 
 public class AuthenticatorManager {

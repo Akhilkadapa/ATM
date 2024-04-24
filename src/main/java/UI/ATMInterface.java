@@ -1,6 +1,8 @@
-package java.UI;
+package UI;
 
-import java.core.ATMOperations;
+import core.ATMOperations;
+
+
 
 
 public class ATMInterface {

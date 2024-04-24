@@ -1,10 +1,9 @@
-package java;
 
-import java.UI.ATMInterface;
-import java.UI.UserInput;
-import java.account.Account;
-import java.core.ATMOperations;
-import java.authenticator.AuthenticatorManager;
+import UI.ATMInterface;
+import UI.UserInput;
+import account.Account;
+import core.ATMOperations;
+import authenticator.AuthenticatorManager;
 
 
 
