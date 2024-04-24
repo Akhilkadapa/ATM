@@ -3,7 +3,7 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/atmapplication/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/atmapplication/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/java/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/java/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/main/resources" charset="UTF-8" />
   </component>
 </project>
