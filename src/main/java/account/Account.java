@@ -21,6 +21,6 @@ public class Account {
             throw new InsufficientFundsException("Insufficient funds");
         }
         balance -= amount;
-        System.out.println("Withdrawal successful. Remaining balance: $" + balance);
+        System.out.println("Withdrawal successful. Remaining balance: £" + balance);
     }
 }

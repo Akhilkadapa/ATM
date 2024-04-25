@@ -1,10 +1,8 @@
-
 import UI.ATMInterface;
 import UI.UserInput;
 import account.Account;
-import core.ATMOperations;
 import authenticator.AuthenticatorManager;
-
+import core.ATMOperations;
 
 
 public class Main {

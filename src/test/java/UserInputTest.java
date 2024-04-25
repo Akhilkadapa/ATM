@@ -20,7 +20,7 @@ public class UserInputTest {
 
     @After
     public void tearDown() {
-        System.setIn(systemIn);
+        restoreSystemInput();
     }
 
     @Test
@@ -56,5 +56,9 @@ public class UserInputTest {
     private void provideTestInput(String data) {
         testIn = new ByteArrayInputStream(data.getBytes());
         System.setIn(testIn);
+    }
+
+    private void restoreSystemInput() {
+        System.setIn(systemIn);
     }
 }

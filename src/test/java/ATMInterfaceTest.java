@@ -1,44 +1,44 @@
 
-import core.ATMOperations;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mockito;
 import UI.ATMInterface;
 import UI.UserInput;
+import core.ATMOperations;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class ATMInterfaceTest {
-
-    private ATMOperations mockATMOperations;
-    private UserInput mockUserInput;
+    private ATMOperations atmOperations;
+    private UserInput userInput;
     private ATMInterface atmInterface;
 
-    @Before
-    public void setUp() {
-        mockATMOperations = Mockito.mock(ATMOperations.class);
-        mockUserInput = Mockito.mock(UserInput.class);
-        atmInterface = new ATMInterface(mockATMOperations, mockUserInput);
+    @BeforeEach
+    public void setup() {
+        atmOperations = mock(ATMOperations.class);
+        userInput = mock(UserInput.class);
+        atmInterface = new ATMInterface(atmOperations, userInput);
     }
 
     @Test
-    public void testStart_AuthenticationSuccess_DisplayBalance() {
-        // Stub user input for PIN
-        when(mockUserInput.getUserCommand()).thenReturn("1234");
+    public void testStart() {
+        when(userInput.getUserCommand()).thenReturn("1234", "1", "4");
+        when(atmOperations.authenticate(anyString())).thenReturn(true);
 
-        // Stub authentication to return true
-        when(mockATMOperations.authenticate("1234")).thenReturn(true);
-
-        // Stub user input for exit
-        when(mockUserInput.getUserCommand()).thenReturn("1", "4"); // Provide input for balance enquiry and exit
-
-        // Call the method under test
         atmInterface.start();
 
-        // Verify that the methods were called as expected
-        verify(mockATMOperations).authenticate("1234");
-        verify(mockATMOperations).displayBalance();
+        verify(atmOperations, times(1)).displayBalance();
     }
+
+    @Test
+    public void testWithdrawMoney() {
+        when(userInput.getUserCommand()).thenReturn("1234", "2", "4");
+        when(userInput.getAmount()).thenReturn(100.0);
+        when(atmOperations.authenticate(anyString())).thenReturn(true);
+
+        atmInterface.start();
+
+        verify(atmOperations, times(1)).withdrawMoney(100.0);
+    }
+
 
 }
