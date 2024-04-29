@@ -4,7 +4,8 @@ import core.ATMOperations;
 import exception.InsufficientFundsException;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 public class ATMOperationsTest {
@@ -53,4 +54,3 @@ public class ATMOperationsTest {
         verify(mockAuthenticator).changePin("5678");
     }
 }
-

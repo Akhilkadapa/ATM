@@ -3,23 +3,29 @@ package UI;
 import java.util.Scanner;
 
 public class UserInput {
-    private Scanner scanner;
+    private static Scanner scanner;
 
     public UserInput() {
-        this.scanner = new Scanner(System.in);
+        scanner = new Scanner(System.in);
     }
 
-    public String getUserCommand() {
-        System.out.println("Enter your command: ");
+    public static String getUserCommand() {
+        System.out.println("Enter your PIN: ");
         return scanner.nextLine();
     }
 
-    public double getAmount() {
+    public static double getAmount() {
         System.out.println("Enter amount: ");
-        return Double.parseDouble(scanner.nextLine());
+        while (true) {
+            try {
+                return Double.parseDouble(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid number.");
+            }
+        }
     }
 
-    public String getNewPin() {
+    public static String getNewPin() {
         System.out.println("Enter new PIN: ");
         return scanner.nextLine();
     }

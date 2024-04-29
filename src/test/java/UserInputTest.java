@@ -9,56 +9,42 @@ import java.io.InputStream;
 import static org.junit.Assert.assertEquals;
 
 public class UserInputTest {
-    private final InputStream systemIn = System.in;
-    private ByteArrayInputStream testIn;
-    private UserInput userInput;
+
+    private final InputStream originalSystemIn = System.in;
+    private final ByteArrayInputStream mockInput = new ByteArrayInputStream("test\nabc\n100.0\n4321\n".getBytes());
 
     @Before
     public void setUp() {
-        userInput = new UserInput();
+        System.setIn(mockInput);
     }
 
     @After
     public void tearDown() {
-        restoreSystemInput();
+        System.setIn(originalSystemIn);
     }
 
     @Test
     public void testGetUserCommand() {
-        String input = "command";
-        provideTestInput(input);
-
-        String result = userInput.getUserCommand();
-
-        assertEquals(input, result);
+        UserInput userInput = new UserInput();
+        assertEquals("test", userInput.getUserCommand());
     }
 
     @Test
     public void testGetAmount() {
-        double amount = 100.0;
-        provideTestInput(Double.toString(amount));
+        UserInput userInput = new UserInput();
+        // First attempt: non-numeric input
+        System.out.println("Expected output: 'Invalid input. Please enter a valid number.'");
+        assertEquals(100.0, userInput.getAmount(), 0.001);
 
-        double result = userInput.getAmount();
-
-        assertEquals(amount, result, 0.001);
+        // Second attempt: valid numeric input
+        assertEquals(4321.0, userInput.getAmount(), 0.001);
     }
 
     @Test
     public void testGetNewPin() {
-        String pin = "1234";
-        provideTestInput(pin);
-
-        String result = userInput.getNewPin();
-
-        assertEquals(pin, result);
+        UserInput userInput = new UserInput();
+        assertEquals("test", userInput.getNewPin());
     }
 
-    private void provideTestInput(String data) {
-        testIn = new ByteArrayInputStream(data.getBytes());
-        System.setIn(testIn);
-    }
-
-    private void restoreSystemInput() {
-        System.setIn(systemIn);
-    }
 }
+
