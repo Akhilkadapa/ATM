@@ -1,6 +1,7 @@
+package core;
+
 import account.Account;
 import authenticator.AuthenticatorManager;
-import core.ATMOperations;
 import exception.InsufficientFundsException;
 import org.junit.Before;
 import org.junit.Test;

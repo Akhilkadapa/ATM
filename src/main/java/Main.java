@@ -1,5 +1,5 @@
-import UI.ATMInterface;
-import UI.UserInput;
+import ui.ATMInterface;
+import ui.UserInput;
 import account.Account;
 import authenticator.AuthenticatorManager;
 import core.ATMOperations;

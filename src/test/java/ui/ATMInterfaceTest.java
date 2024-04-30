@@ -1,5 +1,7 @@
-import UI.ATMInterface;
-import UI.UserInput;
+package ui;
+
+import ui.ATMInterface;
+import ui.UserInput;
 import core.ATMOperations;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

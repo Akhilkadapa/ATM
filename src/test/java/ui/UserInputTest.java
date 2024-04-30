@@ -1,4 +1,6 @@
-import UI.UserInput;
+package ui;
+
+import ui.UserInput;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
