@@ -1,4 +1,3 @@
-
 import UI.ATMInterface;
 import UI.UserInput;
 import core.ATMOperations;
@@ -21,24 +20,32 @@ public class ATMInterfaceTest {
 
     @Test
     public void testStart() {
-        when(userInput.getUserCommand()).thenReturn("1234", "1", "4");
+        // Define behavior for getUserCommand() mock
+        when(userInput.getUserCommand()).thenReturn("1234", "1", "4"); // Provide predefined input
+
+        // Define behavior for authenticate() mock
         when(atmOperations.authenticate(anyString())).thenReturn(true);
 
+        // Execute the method under test
         atmInterface.start();
 
+        // Verify that displayBalance() is called once
         verify(atmOperations, times(1)).displayBalance();
     }
 
     @Test
     public void testWithdrawMoney() {
-        when(userInput.getUserCommand()).thenReturn("1234", "2", "4");
+        // Define behavior for getAmount() mock
+        when(userInput.getUserCommand()).thenReturn("1234", "2", "4"); // Provide predefined input
         when(userInput.getAmount()).thenReturn(100.0);
+
+        // Define behavior for authenticate() mock
         when(atmOperations.authenticate(anyString())).thenReturn(true);
 
+        // Execute the method under test
         atmInterface.start();
 
+        // Verify that withdrawMoney() is called once with the correct amount
         verify(atmOperations, times(1)).withdrawMoney(100.0);
     }
-
-
 }

@@ -3,18 +3,18 @@ package UI;
 import java.util.Scanner;
 
 public class UserInput {
-    private static Scanner scanner;
+    private Scanner scanner;
 
     public UserInput() {
-        scanner = new Scanner(System.in);
+        this.scanner = new Scanner(System.in);
     }
 
-    public static String getUserCommand() {
+    public String getUserCommand() {
         System.out.println("Enter your PIN: ");
         return scanner.nextLine();
     }
 
-    public static double getAmount() {
+    public double getAmount() {
         System.out.println("Enter amount: ");
         while (true) {
             try {
@@ -25,7 +25,7 @@ public class UserInput {
         }
     }
 
-    public static String getNewPin() {
+    public String getNewPin() {
         System.out.println("Enter new PIN: ");
         return scanner.nextLine();
     }
