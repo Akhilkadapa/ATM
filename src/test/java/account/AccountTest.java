@@ -1,8 +1,7 @@
-
+package account;
 
 // AccountTest.java
 
-import account.Account;
 import exception.InsufficientFundsException;
 import org.junit.Test;
 
