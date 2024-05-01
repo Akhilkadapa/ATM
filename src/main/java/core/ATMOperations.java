@@ -15,7 +15,17 @@ public class ATMOperations {
     }
 
     public boolean authenticate(String pin) {
-        return authenticator.validatePin(pin);
+        if (authenticator.isLockedOut()) {
+            System.out.println("Account is locked. Please contact customer support.");
+            return false;
+        }
+
+        if (authenticator.validatePin(pin)) {
+            return true; // Authentication successful
+        } else {
+            System.out.println("Invalid PIN. Please try again.");
+            return false; // Authentication failed
+        }
     }
 
     public void displayBalance() {
