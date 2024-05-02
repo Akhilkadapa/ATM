@@ -4,7 +4,6 @@ import account.Account;
 import exception.InsufficientFundsException;
 import authenticator.AuthenticatorManager;
 
-
 public class ATMOperations {
     private final Account account;
     private final AuthenticatorManager authenticator;
@@ -15,7 +14,7 @@ public class ATMOperations {
     }
 
     public boolean authenticate(String pin) {
-        if (authenticator.isLockedOut()) {
+        if (getAuthenticator().isLockedOut()) {
             System.out.println("Account is locked. Please contact customer support.");
             return false;
         }
@@ -26,6 +25,10 @@ public class ATMOperations {
             System.out.println("Invalid PIN. Please try again.");
             return false; // Authentication failed
         }
+    }
+
+    public AuthenticatorManager getAuthenticator() {
+        return authenticator;
     }
 
     public void displayBalance() {
@@ -48,3 +51,4 @@ public class ATMOperations {
         }
     }
 }
+

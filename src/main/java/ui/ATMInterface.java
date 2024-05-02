@@ -2,9 +2,6 @@ package ui;
 
 import core.ATMOperations;
 
-
-
-
 public class ATMInterface {
     private final ATMOperations atmOperations;
     private final UserInput userInput;
@@ -16,17 +13,23 @@ public class ATMInterface {
 
     public void start() {
         boolean isAuthenticated = false;
+        String pin; // Initialize pin to null
         while (!isAuthenticated) {
-            String pin = userInput.getUserCommand();
+            pin = userInput.getUserCommand(); // Prompt for PIN
             try {
-                isAuthenticated = atmOperations.authenticate(pin);
+                isAuthenticated = atmOperations.authenticate(pin); // Authenticate user
             } catch (IllegalArgumentException e) {
                 System.out.println("Error: " + e.getMessage());
+            }
+            if (!isAuthenticated && atmOperations.getAuthenticator().isLockedOut()) {
+                System.out.println("Account is locked. Exiting ATM.");
+                return; // Exit the method
             }
             if (!isAuthenticated) {
                 System.out.println("Invalid PIN. Please try again.");
             }
         }
+
 
         boolean exit = false;
         while (!exit) {
@@ -62,4 +65,6 @@ public class ATMInterface {
             }
         }
     }
+
+
 }

@@ -44,6 +44,7 @@ public class AuthenticatorManager {
     private void lockoutUser() {
         lockedOut = true;
         System.out.println("Account locked. Please contact customer service. Too many failed login attempts.");
+        return;
     }
 
     private void resetFailedAttempts() {
