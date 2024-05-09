@@ -41,13 +41,18 @@ public class AuthenticatorManager {
         return failedAttempts >= MAX_FAILED_ATTEMPTS;
     }
 
+    public int getMaxFailedAttempts() {
+        return MAX_FAILED_ATTEMPTS;
+    }
+
     private void lockoutUser() {
         lockedOut = true;
         System.out.println("Account locked. Please contact customer service. Too many failed login attempts.");
         return;
     }
 
-    private void resetFailedAttempts() {
+    // Change the access modifier to public
+    public void resetFailedAttempts() {
         failedAttempts = 0;
     }
 
@@ -59,6 +64,4 @@ public class AuthenticatorManager {
         resetFailedAttempts(); // Reset failed attempts when changing PIN
         System.out.println("PIN changed successfully");
     }
-
-
 }

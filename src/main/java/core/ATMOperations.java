@@ -20,12 +20,15 @@ public class ATMOperations {
         }
 
         if (authenticator.validatePin(pin)) {
+            getAuthenticator().resetFailedAttempts(); // Reset failed attempts on successful login
             return true; // Authentication successful
         } else {
             System.out.println("Invalid PIN. Please try again.");
             return false; // Authentication failed
         }
     }
+
+
 
     public AuthenticatorManager getAuthenticator() {
         return authenticator;

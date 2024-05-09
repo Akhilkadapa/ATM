@@ -1,5 +1,6 @@
 package ui;
 
+import authenticator.AuthenticatorManager;
 import core.ATMOperations;
 
 public class ATMInterface {
@@ -12,23 +13,27 @@ public class ATMInterface {
     }
 
     public void start() {
-        boolean isAuthenticated = false;
-        String pin; // Initialize pin to null
-        while (!isAuthenticated) {
-            pin = userInput.getUserCommand(); // Prompt for PIN
-            try {
-                isAuthenticated = atmOperations.authenticate(pin); // Authenticate user
-            } catch (IllegalArgumentException e) {
-                System.out.println("Error: " + e.getMessage());
+        AuthenticatorManager authenticator = atmOperations.getAuthenticator();
+        int maxAttempts = authenticator.getMaxFailedAttempts();
+
+        System.out.println("Maximum failed attempts allowed: " + maxAttempts);
+
+        int failedAttempts = 0;
+
+        do {
+            String pin = userInput.getUserCommand();
+            if (atmOperations.authenticate(pin)) {
+                break;
+            } else {
+                failedAttempts++;
+                if (failedAttempts >= maxAttempts) {
+                    System.out.println("Account locked. Too many failed login attempts. Exiting ATM.");
+                    return;
+                } else {
+                    System.out.println("Invalid PIN. Please try again.");
+                }
             }
-            if (!isAuthenticated && atmOperations.getAuthenticator().isLockedOut()) {
-                System.out.println("Account is locked. Exiting ATM.");
-                return; // Exit the method
-            }
-            if (!isAuthenticated) {
-                System.out.println("Invalid PIN. Please try again.");
-            }
-        }
+        } while (true);
 
 
         boolean exit = false;
@@ -44,12 +49,8 @@ public class ATMInterface {
                     atmOperations.displayBalance();
                     break;
                 case "2":
-                    try {
-                        double amount = userInput.getAmount();
-                        atmOperations.withdrawMoney(amount);
-                    } catch (IllegalArgumentException e) {
-                        System.out.println("Error: " + e.getMessage());
-                    }
+                    double amount = userInput.getAmount();
+                    atmOperations.withdrawMoney(amount);
                     break;
                 case "3":
                     String newPin = userInput.getNewPin();
@@ -65,10 +66,4 @@ public class ATMInterface {
             }
         }
     }
-
-
 }
-
-
-
-
