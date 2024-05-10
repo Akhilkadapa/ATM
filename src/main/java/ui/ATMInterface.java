@@ -29,8 +29,6 @@ public class ATMInterface {
                 if (failedAttempts >= maxAttempts) {
                     System.out.println("Account locked. Too many failed login attempts. Exiting ATM.");
                     return;
-                } else {
-                    System.out.println("Invalid PIN. Please try again.");
                 }
             }
         } while (true);
