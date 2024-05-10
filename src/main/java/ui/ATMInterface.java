@@ -21,7 +21,8 @@ public class ATMInterface {
         int failedAttempts = 0;
 
         do {
-            String pin = userInput.getUserCommand();
+
+            String pin = userInput.getUserCommand("Enter your PIN:");
             if (atmOperations.authenticate(pin)) {
                 break;
             } else {
@@ -41,7 +42,7 @@ public class ATMInterface {
             System.out.println("3. Change PIN");
             System.out.println("4. Exit");
 
-            String choice = userInput.getUserCommand();
+            String choice = userInput.getUserCommand("Enter your choice:");
             switch (choice) {
                 case "1":
                     atmOperations.displayBalance();

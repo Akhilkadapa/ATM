@@ -14,9 +14,10 @@ public class AuthenticatorManager {
 
     public boolean validatePin(String inputPin) {
         if (lockedOut) {
-            System.out.println("Account is locked . Please contact customer support.");
+            System.out.println("Account is locked. Please contact customer support.");
             return false;
         }
+
         if (pin.equals(inputPin)) {
             resetFailedAttempts(); // Reset failed attempts on successful login
             return true;
@@ -47,11 +48,9 @@ public class AuthenticatorManager {
 
     private void lockoutUser() {
         lockedOut = true;
-        System.out.println("Account locked. Please contact customer service. Too many failed login attempts.");
-        return;
+        System.out.println("Account locked. Too many failed login attempts. Please contact customer service.");
     }
 
-    // Change the access modifier to public
     public void resetFailedAttempts() {
         failedAttempts = 0;
     }

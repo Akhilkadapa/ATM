@@ -9,8 +9,8 @@ public class UserInput {
         this.scanner = new Scanner(System.in);
     }
 
-    public String getUserCommand() {
-        System.out.println("Enter your PIN: ");
+    public String getUserCommand(String prompt) {
+        System.out.println(prompt);
         return scanner.nextLine();
     }
 
