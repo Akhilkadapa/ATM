@@ -14,6 +14,10 @@ public class ATMInterface {
 
     public void start() {
         AuthenticatorManager authenticator = atmOperations.getAuthenticator();
+        if (authenticator == null) {
+            System.out.println("Error: Authenticator not initialized.");
+            return;
+        }
         int maxAttempts = authenticator.getMaxFailedAttempts();
 
         System.out.println("Maximum failed attempts allowed: " + maxAttempts);

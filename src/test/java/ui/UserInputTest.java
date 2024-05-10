@@ -1,6 +1,5 @@
 package ui;
 
-import ui.UserInput;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,7 +27,7 @@ public class UserInputTest {
     @Test
     public void testGetUserCommand() {
         UserInput userInput = new UserInput();
-        assertEquals("test", userInput.getUserCommand());
+        assertEquals("test", userInput.getUserCommand("Enter a command:"));
     }
 
     @Test

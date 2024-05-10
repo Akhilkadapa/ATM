@@ -1,53 +1,89 @@
 package ui;
 
-import ui.ATMInterface;
-import ui.UserInput;
 import core.ATMOperations;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import static org.mockito.Mockito.*;
 
-public class ATMInterfaceTest {
-    private ATMOperations atmOperations;
-    private UserInput userInput;
+class ATMInterfaceTest {
+
+    @Mock
+    private ATMOperations mockATMOperations;
+
+    @Mock
+    private UserInput mockUserInput;
+
     private ATMInterface atmInterface;
 
     @BeforeEach
-    public void setup() {
-        atmOperations = mock(ATMOperations.class);
-        userInput = mock(UserInput.class);
-        atmInterface = new ATMInterface(atmOperations, userInput);
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+        atmInterface = new ATMInterface(mockATMOperations, mockUserInput);
     }
 
     @Test
-    public void testStart() {
-        // Define behavior for getUserCommand() mock
-        when(userInput.getUserCommand()).thenReturn("1234", "1", "4"); // Provide predefined input
+    void testSuccessfulLoginAndBalanceEnquiry() {
+        when(mockUserInput.getUserCommand("Enter your PIN:")).thenReturn("1234");
+        when(mockATMOperations.authenticate("1234")).thenReturn(true);
+        when(mockUserInput.getUserCommand("Enter your choice:")).thenReturn("1");
 
-        // Define behavior for authenticate() mock
-        when(atmOperations.authenticate(anyString())).thenReturn(true);
-
-        // Execute the method under test
         atmInterface.start();
 
-        // Verify that displayBalance() is called once
-        verify(atmOperations, times(1)).displayBalance();
+        verify(mockATMOperations).displayBalance();
+        verifyNoMoreInteractions(mockATMOperations);
     }
 
     @Test
-    public void testWithdrawMoney() {
-        // Define behavior for getAmount() mock
-        when(userInput.getUserCommand()).thenReturn("1234", "2", "4"); // Provide predefined input
-        when(userInput.getAmount()).thenReturn(100.0);
+    void testInvalidLoginAttemptsAndExit() {
+        when(mockUserInput.getUserCommand("Enter your PIN:")).thenReturn("0000");
+        when(mockATMOperations.authenticate("0000")).thenReturn(false);
+        when(mockUserInput.getUserCommand("Enter your choice:")).thenReturn("4");
 
-        // Define behavior for authenticate() mock
-        when(atmOperations.authenticate(anyString())).thenReturn(true);
-
-        // Execute the method under test
         atmInterface.start();
 
-        // Verify that withdrawMoney() is called once with the correct amount
-        verify(atmOperations, times(1)).withdrawMoney(100.0);
+        verify(mockATMOperations, never()).displayBalance();
+        verify(mockATMOperations).getAuthenticator();
+        verifyNoMoreInteractions(mockATMOperations);
+    }
+
+    @Test
+    void testWithdrawMoney() {
+        when(mockUserInput.getUserCommand("Enter your PIN:")).thenReturn("1234");
+        when(mockATMOperations.authenticate("1234")).thenReturn(true);
+        when(mockUserInput.getUserCommand("Enter your choice:")).thenReturn("2");
+        when(mockUserInput.getAmount()).thenReturn(100.0);
+
+        atmInterface.start();
+
+        verify(mockATMOperations).withdrawMoney(100.0);
+        verifyNoMoreInteractions(mockATMOperations);
+    }
+
+    @Test
+    void testChangePin() {
+        when(mockUserInput.getUserCommand("Enter your PIN:")).thenReturn("1234");
+        when(mockATMOperations.authenticate("1234")).thenReturn(true);
+        when(mockUserInput.getUserCommand("Enter your choice:")).thenReturn("3");
+        when(mockUserInput.getNewPin()).thenReturn("4321");
+
+        atmInterface.start();
+
+        verify(mockATMOperations).changePin("4321");
+        verifyNoMoreInteractions(mockATMOperations);
+    }
+
+    @Test
+    void testInvalidChoice() {
+        when(mockUserInput.getUserCommand("Enter your PIN:")).thenReturn("1234");
+        when(mockATMOperations.authenticate("1234")).thenReturn(true);
+        when(mockUserInput.getUserCommand("Enter your choice:")).thenReturn("5");
+
+        atmInterface.start();
+
+        verify(mockATMOperations, never()).displayBalance();
+        verifyNoMoreInteractions(mockATMOperations);
     }
 }
