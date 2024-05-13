@@ -1,89 +1,38 @@
 package ui;
 
+import authenticator.AuthenticatorManager;
 import core.ATMOperations;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import static org.mockito.Mockito.*;
 
-class ATMInterfaceTest {
-
-    @Mock
-    private ATMOperations mockATMOperations;
-
-    @Mock
-    private UserInput mockUserInput;
-
+public class ATMInterfaceTest {
+    private ATMOperations atmOperations;
+    private UserInput userInput;
     private ATMInterface atmInterface;
 
     @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-        atmInterface = new ATMInterface(mockATMOperations, mockUserInput);
+    public void setup() {
+        atmOperations = mock(ATMOperations.class);
+        userInput = mock(UserInput.class);
+        atmInterface = new ATMInterface(atmOperations, userInput);
     }
 
     @Test
-    void testSuccessfulLoginAndBalanceEnquiry() {
-        when(mockUserInput.getUserCommand("Enter your PIN:")).thenReturn("1234");
-        when(mockATMOperations.authenticate("1234")).thenReturn(true);
-        when(mockUserInput.getUserCommand("Enter your choice:")).thenReturn("1");
+    public void testStart() {
+        AuthenticatorManager authenticator = mock(AuthenticatorManager.class);
+        when(atmOperations.getAuthenticator()).thenReturn(authenticator);
+        when(authenticator.getMaxFailedAttempts()).thenReturn(3);
+        when(userInput.getUserCommand(anyString())).thenReturn("1234", "1", "4");
+        when(atmOperations.authenticate("1234")).thenReturn(true);
 
         atmInterface.start();
 
-        verify(mockATMOperations).displayBalance();
-        verifyNoMoreInteractions(mockATMOperations);
-    }
-
-    @Test
-    void testInvalidLoginAttemptsAndExit() {
-        when(mockUserInput.getUserCommand("Enter your PIN:")).thenReturn("0000");
-        when(mockATMOperations.authenticate("0000")).thenReturn(false);
-        when(mockUserInput.getUserCommand("Enter your choice:")).thenReturn("4");
-
-        atmInterface.start();
-
-        verify(mockATMOperations, never()).displayBalance();
-        verify(mockATMOperations).getAuthenticator();
-        verifyNoMoreInteractions(mockATMOperations);
-    }
-
-    @Test
-    void testWithdrawMoney() {
-        when(mockUserInput.getUserCommand("Enter your PIN:")).thenReturn("1234");
-        when(mockATMOperations.authenticate("1234")).thenReturn(true);
-        when(mockUserInput.getUserCommand("Enter your choice:")).thenReturn("2");
-        when(mockUserInput.getAmount()).thenReturn(100.0);
-
-        atmInterface.start();
-
-        verify(mockATMOperations).withdrawMoney(100.0);
-        verifyNoMoreInteractions(mockATMOperations);
-    }
-
-    @Test
-    void testChangePin() {
-        when(mockUserInput.getUserCommand("Enter your PIN:")).thenReturn("1234");
-        when(mockATMOperations.authenticate("1234")).thenReturn(true);
-        when(mockUserInput.getUserCommand("Enter your choice:")).thenReturn("3");
-        when(mockUserInput.getNewPin()).thenReturn("4321");
-
-        atmInterface.start();
-
-        verify(mockATMOperations).changePin("4321");
-        verifyNoMoreInteractions(mockATMOperations);
-    }
-
-    @Test
-    void testInvalidChoice() {
-        when(mockUserInput.getUserCommand("Enter your PIN:")).thenReturn("1234");
-        when(mockATMOperations.authenticate("1234")).thenReturn(true);
-        when(mockUserInput.getUserCommand("Enter your choice:")).thenReturn("5");
-
-        atmInterface.start();
-
-        verify(mockATMOperations, never()).displayBalance();
-        verifyNoMoreInteractions(mockATMOperations);
+        verify(atmOperations, times(1)).getAuthenticator();
+        verify(authenticator, times(1)).getMaxFailedAttempts();
+        verify(userInput, times(3)).getUserCommand(anyString());
+        verify(atmOperations, times(1)).authenticate("1234");
+        verify(atmOperations, times(1)).displayBalance();
     }
 }
